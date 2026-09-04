@@ -60,15 +60,78 @@ function Gameboard() {
 function Cell() {
     let value = 0;
 
-    const addToken = (player) => {
+    const addPiece = (player) => {
         value = player;
     }
 
     const getValue = () => value;
 
     return {
-        addToken,
+        addPiece,
         getValue,
     }
 }
 
+/*
+** The GameController will be responsible for controlling the
+** flow and state of the game's turns, as well as whether
+** anybody has won the game
+*/
+
+function GameContoller(
+    playerOneName = "X",
+    playerTwoName = "O",
+) {
+    const board = Gameboard();
+
+    const players = [
+        {
+            name: playerOneName,
+            piece: "X",
+        },
+        {
+            name: playerTwoName,
+            piece: "O",
+        },
+    ];
+
+    let activePlayer = players[0];
+
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    };
+    const getActivePlayer = () => activePlayer;
+
+    const printNewRound = () => {
+        board.printBoard();
+        console.log(`${getActivePlayer().name} player's turn.`);
+    };
+
+    const playRound = (row, column) => {
+        // Drop a piece for the current player at a tile
+        console.log(
+            `Dropping ${getActivePlayer().name}'s piece into row ${row} column ${column}...`
+        );
+        board.dropToken(row, column, getActivePlayer().piece);
+
+        /* This is where we would check for a winner and handle that logic, 
+        such as a win message. */
+
+
+        // Switch player turn
+        switchPlayerTurn();
+        printNewRound();
+    };
+
+    // Initial play game message
+    printNewRound();
+
+    // For the console version, we will only use playRound, but we will
+    // need getActivePlayer for the UI version
+    return {
+        playRound,
+        getActivePlayer,
+    };
+}
+
+const game = GameContoller()
