@@ -1,7 +1,7 @@
 /* 
 The Gameboard represents the state of the board
 Each square holds a Cell (defined below)
-and we expose a dropToken method to be able to add Cells to the 3x3 squares
+and we expose a dropPiece method to be able to add Cells to the 3x3 squares
 */
 
 function Gameboard() {
@@ -22,23 +22,20 @@ function Gameboard() {
     // This will be the function of getting the entire board that our
     // UI will eventually need to render it.
     const getBoard = () => board;
-
     // // In order to place a piece, we need to find out which row and column
     // // is empty, *then* change that cell's value to the player's piece.
+
     const dropPiece = (row, column, player) => {
         // Our board's outermost array represents the row,
         // so we need to loop through the rows, starting at row 0,
         // all cells with no piece will be returned as available cells
-        const availableCells = board.
-        filter((row) => row[column].getValue() > -1)
-        .map((row => row[column]))
-
-        // If no cells make it through the filter,
-        // move is invalid or all cells are filled or tied game
-        if (!availableCells.length) return;
+        if (board[row][column].getValue() !== 0) {
+            console.log('Invalid Move: Tile has already a piece!')
+            return
+        }
 
         // Otherwise, we have valid cells to place pieces
-        availableCells
+        board[row][column].addPiece(player);
     }
     
     /*
@@ -54,7 +51,7 @@ function Gameboard() {
         );
         console.log(boardWithCellValues);
     }
-    return { getBoard, printBoard };
+    return { getBoard, dropPiece, printBoard };
 }
 
 function Cell() {
@@ -107,23 +104,36 @@ function GameContoller(
         console.log(`${getActivePlayer().name} player's turn.`);
     };
 
+    const winningCondition = () => {
+        if (
+            board.getBoard()[0][0].getValue() &&
+            board.getBoard()[0][1].getValue() &&
+            board.getBoard()[0][2].getValue()
+        ) {
+            console.log('Player X wins!')
+        }
+    }
+
+
     const playRound = (row, column) => {
         // Drop a piece for the current player at a tile
         console.log(
             `Dropping ${getActivePlayer().name}'s piece into row ${row} column ${column}...`
         );
-        board.dropToken(row, column, getActivePlayer().piece);
+        board.dropPiece(row, column, getActivePlayer().piece);
 
         /* This is where we would check for a winner and handle that logic, 
         such as a win message. */
 
+        winningCondition()
 
         // Switch player turn
         switchPlayerTurn();
         printNewRound();
     };
 
-    // Initial play game message
+    
+    // Initial play game message    
     printNewRound();
 
     // For the console version, we will only use playRound, but we will
@@ -135,3 +145,10 @@ function GameContoller(
 }
 
 const game = GameContoller()
+game.playRound(0, 0)
+game.playRound(1, 1)
+game.playRound(0, 2)
+game.playRound(1, 2)
+game.playRound(0, 1)
+// game.playRound(0, 1, playerTwoName)
+// game.playRound(0, 1, playerOneName)
