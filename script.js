@@ -105,10 +105,89 @@ function GameContoller(
     };
 
     const winningCondition = () => {
-        if (
-            board.getBoard()[0][0].getValue() &&
-            board.getBoard()[0][1].getValue() &&
-            board.getBoard()[0][2].getValue()
+
+        if ((
+            board.getBoard()[0][0].getValue() === "O" &&
+            board.getBoard()[0][1].getValue() === "O" &&
+            board.getBoard()[0][2].getValue() === "O" 
+        ) || 
+        (
+            board.getBoard()[1][0].getValue() === "O" &&
+            board.getBoard()[1][1].getValue() === "O" &&
+            board.getBoard()[1][2].getValue() === "O"
+        ) || 
+        (
+            board.getBoard()[2][0].getValue() === "O" &&
+            board.getBoard()[2][1].getValue() === "O" &&
+            board.getBoard()[2][2].getValue() === "O"
+        ) || 
+        (
+            board.getBoard()[0][0].getValue() === "O" &&
+            board.getBoard()[1][0].getValue() === "O" &&
+            board.getBoard()[2][0].getValue() === "O"
+        ) || 
+        (
+            board.getBoard()[0][1].getValue() === "O" &&
+            board.getBoard()[1][1].getValue() === "O" &&
+            board.getBoard()[2][1].getValue() === "O"
+        ) ||
+        (
+            board.getBoard()[0][2].getValue() === "O" &&
+            board.getBoard()[1][2].getValue() === "O" &&
+            board.getBoard()[2][2].getValue() === "O"
+        ) ||
+        (
+            board.getBoard()[0][0].getValue() === "O" &&
+            board.getBoard()[1][1].getValue() === "O" &&
+            board.getBoard()[2][2].getValue() === "O"
+        ) ||
+        (
+            board.getBoard()[0][2].getValue() === "O" &&
+            board.getBoard()[1][1].getValue() === "O" &&
+            board.getBoard()[2][0].getValue() === "O"
+        )
+        ){
+            console.log('Player O wins!')
+        } else if ((
+            board.getBoard()[0][0].getValue() === "X" &&
+            board.getBoard()[0][1].getValue()  === "X" &&
+            board.getBoard()[0][2].getValue() === "X"  
+        ) || 
+        (
+            board.getBoard()[1][0].getValue() === "X" &&
+            board.getBoard()[1][1].getValue()  === "X" &&
+            board.getBoard()[1][2].getValue() === "X" 
+        ) || 
+        (
+            board.getBoard()[2][0].getValue() === "X" &&
+            board.getBoard()[2][1].getValue()  === "X" &&
+            board.getBoard()[2][2].getValue() === "X" 
+        ) || 
+        (
+            board.getBoard()[0][0].getValue() === "X" &&
+            board.getBoard()[1][0].getValue()  === "X" &&
+            board.getBoard()[2][0].getValue() === "X" 
+        ) || 
+        (
+            board.getBoard()[0][1].getValue() === "X" &&
+            board.getBoard()[1][1].getValue()  === "X" &&
+            board.getBoard()[2][1].getValue() === "X" 
+        ) || 
+        (
+            board.getBoard()[0][2].getValue() === "X" &&
+            board.getBoard()[1][2].getValue()  === "X" &&
+            board.getBoard()[2][2].getValue() === "X" 
+        ) ||
+        (
+            board.getBoard()[0][0].getValue() === "X" &&
+            board.getBoard()[1][1].getValue() === "X" &&
+            board.getBoard()[2][2].getValue() === "X"
+        ) ||
+        (
+            board.getBoard()[0][2].getValue() === "X" &&
+            board.getBoard()[1][1].getValue() === "X" &&
+            board.getBoard()[2][0].getValue() === "X"
+        )
         ) {
             console.log('Player X wins!')
         }
@@ -145,10 +224,9 @@ function GameContoller(
 }
 
 const game = GameContoller()
-game.playRound(0, 0)
-game.playRound(1, 1)
 game.playRound(0, 2)
+game.playRound(1, 0)
+game.playRound(1, 1)
 game.playRound(1, 2)
-game.playRound(0, 1)
-// game.playRound(0, 1, playerTwoName)
-// game.playRound(0, 1, playerOneName)
+game.playRound(2, 0)
+
