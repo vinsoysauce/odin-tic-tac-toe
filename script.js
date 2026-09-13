@@ -148,34 +148,35 @@ function GameContoller(
         )
         ){
             console.log('Player O wins!')
+            return true
         } else if ((
             board.getBoard()[0][0].getValue() === "X" &&
-            board.getBoard()[0][1].getValue()  === "X" &&
+            board.getBoard()[0][1].getValue() === "X" &&
             board.getBoard()[0][2].getValue() === "X"  
         ) || 
         (
             board.getBoard()[1][0].getValue() === "X" &&
-            board.getBoard()[1][1].getValue()  === "X" &&
+            board.getBoard()[1][1].getValue() === "X" &&
             board.getBoard()[1][2].getValue() === "X" 
         ) || 
         (
             board.getBoard()[2][0].getValue() === "X" &&
-            board.getBoard()[2][1].getValue()  === "X" &&
+            board.getBoard()[2][1].getValue() === "X" &&
             board.getBoard()[2][2].getValue() === "X" 
         ) || 
         (
             board.getBoard()[0][0].getValue() === "X" &&
-            board.getBoard()[1][0].getValue()  === "X" &&
+            board.getBoard()[1][0].getValue() === "X" &&
             board.getBoard()[2][0].getValue() === "X" 
         ) || 
         (
             board.getBoard()[0][1].getValue() === "X" &&
-            board.getBoard()[1][1].getValue()  === "X" &&
+            board.getBoard()[1][1].getValue() === "X" &&
             board.getBoard()[2][1].getValue() === "X" 
         ) || 
         (
             board.getBoard()[0][2].getValue() === "X" &&
-            board.getBoard()[1][2].getValue()  === "X" &&
+            board.getBoard()[1][2].getValue() === "X" &&
             board.getBoard()[2][2].getValue() === "X" 
         ) ||
         (
@@ -190,6 +191,7 @@ function GameContoller(
         )
         ) {
             console.log('Player X wins!')
+            return true
         }
     }
 
@@ -204,7 +206,10 @@ function GameContoller(
         /* This is where we would check for a winner and handle that logic, 
         such as a win message. */
 
-        winningCondition()
+        if (winningCondition()) {
+            board.printBoard()
+            return
+        }
 
         // Switch player turn
         switchPlayerTurn();
