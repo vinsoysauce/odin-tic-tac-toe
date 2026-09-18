@@ -31,7 +31,7 @@ function Gameboard() {
         // all cells with no piece will be returned as available cells
         if (board[row][column].getValue() !== 0) {
             console.log('Invalid Move: Tile has already a piece!')
-            return
+            return false;
         }
 
         // Otherwise, we have valid cells to place pieces
@@ -198,10 +198,10 @@ function GameController(
 
     const playRound = (row, column) => {
         // Drop a piece for the current player at a tile
+        if ((board.dropPiece(row, column, getActivePlayer().piece)) === false) return;
         console.log(
             `Dropping ${getActivePlayer().name}'s piece into row ${row} column ${column}...`
         );
-        board.dropPiece(row, column, getActivePlayer().piece);
 
         /* This is where we would check for a winner and handle that logic, 
         such as a win message. */
