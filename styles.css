@@ -50,12 +50,18 @@ h1, h2, h3, h4, h5, h6 {
   display: grid;
   height: 500px;
   width: 500px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  /* grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr); */
   border: 1px solid black;
   gap: 2px;
   padding: 2px;
   background-color: yellow;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .cell {
@@ -67,4 +73,5 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid grey;
   background: lightyellow;
   cursor: pointer;
+  width: 100%;
 }
