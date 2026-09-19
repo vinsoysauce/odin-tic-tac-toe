@@ -235,12 +235,15 @@ function ScreenController() {
     const updateScreen = () => {
         // clear the board
         boardDiv.textContent = "";
-
         // get the newest version of the board and player turn
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
+        if (game.winningCondition()) {
+            playerTurnDiv.textContent = `Player ${activePlayer.name} wins!`
+        }
+
         // Display player's turn
-        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+        playerTurnDiv.textContent = `Player ${activePlayer.name}'s turn...`;
 
         board.forEach((row, rowIndex) => {
         // Anything clickable should be a button!!
