@@ -105,7 +105,6 @@ function GameController(
     };
 
     const winningCondition = () => {
-
         if ((
             board.getBoard()[0][0].getValue() === "O" &&
             board.getBoard()[0][1].getValue() === "O" &&
@@ -206,7 +205,7 @@ function GameController(
         /* This is where we would check for a winner and handle that logic, 
         such as a win message. */
 
-        if (winningCondition()) return board.printBoard();
+        if (winningCondition()) return;
 
 
         // Switch player turn
@@ -224,6 +223,7 @@ function GameController(
         playRound,
         getActivePlayer,
         getBoard: board.getBoard,
+        winningCondition
     };
 }
 
@@ -266,7 +266,7 @@ function ScreenController() {
     const selectedColumn = e.target.dataset.column
     // Make sure I've clicked a column and not the gaps in between
     if (!selectedRow && !selectedColumn) return;
-
+    if (game.winningCondition()) return;
     game.playRound(selectedRow, selectedColumn);
     updateScreen();
   }

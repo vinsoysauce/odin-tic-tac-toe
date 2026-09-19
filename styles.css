@@ -50,9 +50,7 @@ h1, h2, h3, h4, h5, h6 {
   display: grid;
   height: 600px;
   width: 600px;
-  /* grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr); */
-  background-color: yellow;
+  border: 1px solid grey;
 }
 
 .row {
