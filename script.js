@@ -29,7 +29,7 @@ function Gameboard() {
         // Our board's outermost array represents the row,
         // so we need to loop through the rows, starting at row 0,
         // all cells with no piece will be returned as available cells
-        if (board[row][column].getValue() !== 0) {
+        if (board[row][column].getValue() !== '') {
             console.log('Invalid Move: Tile has already a piece!')
             return false;
         }
@@ -55,7 +55,7 @@ function Gameboard() {
 }
 
 function Cell() {
-    let value = 0;
+    let value = '';
 
     const addPiece = (player) => {
         value = player;
@@ -242,32 +242,8 @@ function ScreenController() {
         // Display player's turn
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
 
-        // Render board squares
-        // board.forEach((row) => {
-        //     row.forEach((cell, index) => {
-        //     // Anything clickable should be a button!!
-        //     const cellButton = document.createElement("button");
-        //     cellButton.classList.add("cell");
-        //     // Create a data attribute to identify the column
-        //     // This makes it easier to pass into our `playRound` function
-        //     cellButton.dataset.column = index;
-        //     cellButton.textContent = cell.getValue();
-        //     boardDiv.appendChild(cellButton);
-        //     });
-        // });
-    board.forEach((row, rowIndex) => {
+        board.forEach((row, rowIndex) => {
         // Anything clickable should be a button!!
-        // row.forEach((cell, index) => {
-        //     // Anything clickable should be a button!!
-        //     const cellButton = document.createElement("button");
-        //     cellButton.classList.add("cell");
-        //     // Create a data attribute to identify the column
-        //     // This makes it easier to pass into our `playRound` function
-        //     cellButton.dataset.row = index;
-        //     cellButton.dataset.column = index;
-        //     cellButton.textContent = cell.getValue();
-        //     boardDiv.appendChild(cellButton);
-        //     });
         const cellRow = document.createElement("div");
         cellRow.classList.add("row");
         cellRow.dataset.row = rowIndex;
