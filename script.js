@@ -104,6 +104,33 @@ function GameController(
         console.log(`${getActivePlayer().name} player's turn.`);
     };
 
+
+    const tieCondition = () => {
+       if ((
+        board.getBoard()[0][0].getValue() === "O" || board.getBoard()[0][0].getValue() === "X"
+       )  && (
+        board.getBoard()[0][1].getValue() === "O" || board.getBoard()[0][1].getValue() === "X"
+       ) && (
+        board.getBoard()[0][2].getValue() === "O" || board.getBoard()[0][2].getValue() === "X"
+       ) && (
+        board.getBoard()[1][0].getValue() === "O" || board.getBoard()[1][0].getValue() === "X"
+       )  && (
+        board.getBoard()[1][1].getValue() === "O" || board.getBoard()[1][1].getValue() === "X"
+       ) && (
+        board.getBoard()[1][2].getValue() === "O" || board.getBoard()[1][2].getValue() === "X"
+       ) && (
+        board.getBoard()[2][0].getValue() === "O" || board.getBoard()[2][0].getValue() === "X"
+       )  && (
+        board.getBoard()[2][1].getValue() === "O" || board.getBoard()[2][1].getValue() === "X"
+       ) && (
+        board.getBoard()[2][2].getValue() === "O" || board.getBoard()[2][2].getValue() === "X"
+       )) {
+        console.log("It's a tie!")
+        return true;
+       }
+       
+    }
+
     const winningCondition = () => {
         if ((
             board.getBoard()[0][0].getValue() === "O" &&
@@ -194,7 +221,6 @@ function GameController(
         }
     }
 
-
     const playRound = (row, column) => {
         // Drop a piece for the current player at a tile
         if ((board.dropPiece(row, column, getActivePlayer().piece)) === false) return;
@@ -205,6 +231,7 @@ function GameController(
         /* This is where we would check for a winner and handle that logic, 
         such as a win message. */
 
+        if (tieCondition()) return
         if (winningCondition()) return;
 
 
@@ -223,7 +250,8 @@ function GameController(
         playRound,
         getActivePlayer,
         getBoard: board.getBoard,
-        winningCondition
+        winningCondition,
+        tieCondition
     };
 }
 
@@ -238,9 +266,6 @@ function ScreenController() {
         // get the newest version of the board and player turn
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
-        if (game.winningCondition()) {
-            playerTurnDiv.textContent = `Player ${activePlayer.name} wins!`
-        }
 
         // Display player's turn
         playerTurnDiv.textContent = `Player ${activePlayer.name}'s turn...`;
@@ -261,6 +286,14 @@ function ScreenController() {
         })
             boardDiv.appendChild(cellRow);
         });
+
+        if (game.tieCondition()) {
+            playerTurnDiv.textContent = `It's a tie!`
+        }
+
+        if (game.winningCondition()) {
+            playerTurnDiv.textContent = `Player ${activePlayer.name} wins!`
+        }
     };
 
   // Add event listener for the board
