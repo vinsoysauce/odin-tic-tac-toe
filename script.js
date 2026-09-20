@@ -259,6 +259,7 @@ function ScreenController() {
     const game = GameController();
     const playerTurnDiv = document.querySelector(".turn")
     const boardDiv = document.querySelector(".board");
+    const resetBtn = document.querySelector(".reset");
 
     const updateScreen = () => {
         // clear the board
@@ -306,7 +307,14 @@ function ScreenController() {
     game.playRound(selectedRow, selectedColumn);
     updateScreen();
   }
+
+  // Reset button
+  function reset(e) {
+    location.reload();
+  }
+
   boardDiv.addEventListener("click", clickHandlerBoard);
+  resetBtn.addEventListener("click", reset)
 
   // Initial render
   updateScreen();
