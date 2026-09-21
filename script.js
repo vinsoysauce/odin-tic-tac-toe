@@ -177,12 +177,11 @@ function GameController(
 
         /* This is where we would check for a winner and handle that logic, 
         such as a win message. */
-        if (winningCondition() || tieCondition()) return;
+        if (winningCondition() || tieCondition()) return true;
 
         // Switch player turn
         switchPlayerTurn();
         printNewRound();
-
     };
 
     
@@ -235,10 +234,12 @@ function ScreenController() {
 
         if (game.winningCondition()) {
             playerTurnDiv.textContent = `Player ${activePlayer.name} wins!`
+            return
         }
 
         if (game.tieCondition()) {
             playerTurnDiv.textContent = `It's a tie!`
+            return
         }
     };
 
@@ -248,9 +249,8 @@ function ScreenController() {
     const selectedColumn = e.target.dataset.column
     // Make sure I've clicked a column and not the gaps in between
     if (!selectedRow && !selectedColumn) return;
-    if (game.winningCondition()|| game.tieCondition()) return;
+    if (game.winningCondition()) return;
     game.playRound(selectedRow, selectedColumn);
-
     updateScreen();
   }
 
