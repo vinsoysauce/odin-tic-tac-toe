@@ -105,33 +105,6 @@ function GameController(
     };
 
 
-    // const tieCondition = () => {
-    //    if ((
-    //     board.getBoard()[0][0].getValue() === "O" || board.getBoard()[0][0].getValue() === "X"
-    //    )  && (
-    //     board.getBoard()[0][1].getValue() === "O" || board.getBoard()[0][1].getValue() === "X"
-    //    ) && (
-    //     board.getBoard()[0][2].getValue() === "O" || board.getBoard()[0][2].getValue() === "X"
-    //    ) && (
-    //     board.getBoard()[1][0].getValue() === "O" || board.getBoard()[1][0].getValue() === "X"
-    //    )  && (
-    //     board.getBoard()[1][1].getValue() === "O" || board.getBoard()[1][1].getValue() === "X"
-    //    ) && (
-    //     board.getBoard()[1][2].getValue() === "O" || board.getBoard()[1][2].getValue() === "X"
-    //    ) && (
-    //     board.getBoard()[2][0].getValue() === "O" || board.getBoard()[2][0].getValue() === "X"
-    //    )  && (
-    //     board.getBoard()[2][1].getValue() === "O" || board.getBoard()[2][1].getValue() === "X"
-    //    ) && (
-    //     board.getBoard()[2][2].getValue() === "O" || board.getBoard()[2][2].getValue() === "X"
-    //    )) {
-    //     console.log("It's a tie!")
-    //     return true;
-    //    }
-       
-    // }
-
-
     // Check win conditions for rows
     const checkRowWin = () => {
         function isRowEqual(row) {
@@ -154,7 +127,6 @@ function GameController(
     }
 
     // Check win conditions for diagonal
-
     const checkDiagWin = () => {
         const firstCell = board.getBoard()[0][0].getValue();
         const lastCell = board.getBoard()[0][2].getValue();
@@ -172,106 +144,15 @@ function GameController(
 
     // Tie condition
     const tieCondition = () => {
-        return board.getBoard().every((row) => row.every((cell) => cell.getValue() !== " "));
+        return board.getBoard().every((row) => row.every((cell) => cell.getValue() !== ""));
     }
 
     // Winning condition
-
     const winningCondition = () => {
         if (checkColWin() || checkDiagWin() || checkRowWin()) {
             return true;
         }
     }
-
-    // const winningCondition = () => {
-    //     if ((
-    //         board.getBoard()[0][0].getValue() === "O" &&
-    //         board.getBoard()[0][1].getValue() === "O" &&
-    //         board.getBoard()[0][2].getValue() === "O" 
-    //     ) || 
-    //     (
-    //         board.getBoard()[1][0].getValue() === "O" &&
-    //         board.getBoard()[1][1].getValue() === "O" &&
-    //         board.getBoard()[1][2].getValue() === "O"
-    //     ) || 
-    //     (
-    //         board.getBoard()[2][0].getValue() === "O" &&
-    //         board.getBoard()[2][1].getValue() === "O" &&
-    //         board.getBoard()[2][2].getValue() === "O"
-    //     ) || 
-    //     (
-    //         board.getBoard()[0][0].getValue() === "O" &&
-    //         board.getBoard()[1][0].getValue() === "O" &&
-    //         board.getBoard()[2][0].getValue() === "O"
-    //     ) || 
-    //     (
-    //         board.getBoard()[0][1].getValue() === "O" &&
-    //         board.getBoard()[1][1].getValue() === "O" &&
-    //         board.getBoard()[2][1].getValue() === "O"
-    //     ) ||
-    //     (
-    //         board.getBoard()[0][2].getValue() === "O" &&
-    //         board.getBoard()[1][2].getValue() === "O" &&
-    //         board.getBoard()[2][2].getValue() === "O"
-    //     ) ||
-    //     (
-    //         board.getBoard()[0][0].getValue() === "O" &&
-    //         board.getBoard()[1][1].getValue() === "O" &&
-    //         board.getBoard()[2][2].getValue() === "O"
-    //     ) ||
-    //     (
-    //         board.getBoard()[0][2].getValue() === "O" &&
-    //         board.getBoard()[1][1].getValue() === "O" &&
-    //         board.getBoard()[2][0].getValue() === "O"
-    //     )
-    //     ){
-    //         console.log('Player O wins!')
-    //         return true
-    //     } else if ((
-    //         board.getBoard()[0][0].getValue() === "X" &&
-    //         board.getBoard()[0][1].getValue() === "X" &&
-    //         board.getBoard()[0][2].getValue() === "X"  
-    //     ) || 
-    //     (
-    //         board.getBoard()[1][0].getValue() === "X" &&
-    //         board.getBoard()[1][1].getValue() === "X" &&
-    //         board.getBoard()[1][2].getValue() === "X" 
-    //     ) || 
-    //     (
-    //         board.getBoard()[2][0].getValue() === "X" &&
-    //         board.getBoard()[2][1].getValue() === "X" &&
-    //         board.getBoard()[2][2].getValue() === "X" 
-    //     ) || 
-    //     (
-    //         board.getBoard()[0][0].getValue() === "X" &&
-    //         board.getBoard()[1][0].getValue() === "X" &&
-    //         board.getBoard()[2][0].getValue() === "X" 
-    //     ) || 
-    //     (
-    //         board.getBoard()[0][1].getValue() === "X" &&
-    //         board.getBoard()[1][1].getValue() === "X" &&
-    //         board.getBoard()[2][1].getValue() === "X" 
-    //     ) || 
-    //     (
-    //         board.getBoard()[0][2].getValue() === "X" &&
-    //         board.getBoard()[1][2].getValue() === "X" &&
-    //         board.getBoard()[2][2].getValue() === "X" 
-    //     ) ||
-    //     (
-    //         board.getBoard()[0][0].getValue() === "X" &&
-    //         board.getBoard()[1][1].getValue() === "X" &&
-    //         board.getBoard()[2][2].getValue() === "X"
-    //     ) ||
-    //     (
-    //         board.getBoard()[0][2].getValue() === "X" &&
-    //         board.getBoard()[1][1].getValue() === "X" &&
-    //         board.getBoard()[2][0].getValue() === "X"
-    //     )
-    //     ) {
-    //         console.log('Player X wins!')
-    //         return true
-    //     }
-    // }
 
     const playRound = (row, column) => {
         // Drop a piece for the current player at a tile
@@ -283,13 +164,12 @@ function GameController(
         /* This is where we would check for a winner and handle that logic, 
         such as a win message. */
 
-        if (tieCondition()) return
-        if (winningCondition()) return;
-
-
+        if (winningCondition() === true) return;
+        
         // Switch player turn
         switchPlayerTurn();
         printNewRound();
+        if (tieCondition() === true) return
     };
 
     
@@ -340,12 +220,12 @@ function ScreenController() {
             boardDiv.appendChild(cellRow);
         });
 
-        if (game.tieCondition()) {
-            playerTurnDiv.textContent = `It's a tie!`
+        if (game.winningCondition() === true) {
+            playerTurnDiv.textContent = `Player ${activePlayer.name} wins!`
         }
 
-        if (game.winningCondition()) {
-            playerTurnDiv.textContent = `Player ${activePlayer.name} wins!`
+        if (game.tieCondition() === true) {
+            playerTurnDiv.textContent = `It's a tie!`
         }
     };
 
@@ -355,7 +235,7 @@ function ScreenController() {
     const selectedColumn = e.target.dataset.column
     // Make sure I've clicked a column and not the gaps in between
     if (!selectedRow && !selectedColumn) return;
-    if (game.winningCondition()) return;
+    if (game.winningCondition() === true) return;
     game.playRound(selectedRow, selectedColumn);
     updateScreen();
   }
