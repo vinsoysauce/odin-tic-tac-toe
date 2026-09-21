@@ -139,12 +139,26 @@ function GameController(
             }
             colIndex++;
         }
+        if (counter === 3) return true;
+
+        colIndex = 2;
+        counter = 0;
+
+        for (let i = 0; i < 3; i++) {
+            if (board.getBoard()[i][colIndex].getValue() === lastCell && lastCell !== "") {
+                counter++;
+            }
+            colIndex--;
+        }
         return counter === 3;
+
     }
 
     // Tie condition
     const tieCondition = () => {
-        return board.getBoard().every((row) => row.every((cell) => cell.getValue() !== ""));
+        if (board.getBoard().every((row) => row.every((cell) => cell.getValue() === "X" || cell.getValue() === "O"))) {
+            return true;
+        }
     }
 
     // Winning condition
@@ -163,13 +177,12 @@ function GameController(
 
         /* This is where we would check for a winner and handle that logic, 
         such as a win message. */
+        if (winningCondition() || tieCondition()) return;
 
-        if (winningCondition() === true) return;
-        
         // Switch player turn
         switchPlayerTurn();
         printNewRound();
-        if (tieCondition() === true) return
+
     };
 
     
@@ -220,11 +233,11 @@ function ScreenController() {
             boardDiv.appendChild(cellRow);
         });
 
-        if (game.winningCondition() === true) {
+        if (game.winningCondition()) {
             playerTurnDiv.textContent = `Player ${activePlayer.name} wins!`
         }
 
-        if (game.tieCondition() === true) {
+        if (game.tieCondition()) {
             playerTurnDiv.textContent = `It's a tie!`
         }
     };
@@ -235,8 +248,9 @@ function ScreenController() {
     const selectedColumn = e.target.dataset.column
     // Make sure I've clicked a column and not the gaps in between
     if (!selectedRow && !selectedColumn) return;
-    if (game.winningCondition() === true) return;
+    if (game.winningCondition()|| game.tieCondition()) return;
     game.playRound(selectedRow, selectedColumn);
+
     updateScreen();
   }
 
