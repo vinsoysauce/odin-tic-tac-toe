@@ -105,121 +105,173 @@ function GameController(
     };
 
 
-    const tieCondition = () => {
-       if ((
-        board.getBoard()[0][0].getValue() === "O" || board.getBoard()[0][0].getValue() === "X"
-       )  && (
-        board.getBoard()[0][1].getValue() === "O" || board.getBoard()[0][1].getValue() === "X"
-       ) && (
-        board.getBoard()[0][2].getValue() === "O" || board.getBoard()[0][2].getValue() === "X"
-       ) && (
-        board.getBoard()[1][0].getValue() === "O" || board.getBoard()[1][0].getValue() === "X"
-       )  && (
-        board.getBoard()[1][1].getValue() === "O" || board.getBoard()[1][1].getValue() === "X"
-       ) && (
-        board.getBoard()[1][2].getValue() === "O" || board.getBoard()[1][2].getValue() === "X"
-       ) && (
-        board.getBoard()[2][0].getValue() === "O" || board.getBoard()[2][0].getValue() === "X"
-       )  && (
-        board.getBoard()[2][1].getValue() === "O" || board.getBoard()[2][1].getValue() === "X"
-       ) && (
-        board.getBoard()[2][2].getValue() === "O" || board.getBoard()[2][2].getValue() === "X"
-       )) {
-        console.log("It's a tie!")
-        return true;
-       }
+    // const tieCondition = () => {
+    //    if ((
+    //     board.getBoard()[0][0].getValue() === "O" || board.getBoard()[0][0].getValue() === "X"
+    //    )  && (
+    //     board.getBoard()[0][1].getValue() === "O" || board.getBoard()[0][1].getValue() === "X"
+    //    ) && (
+    //     board.getBoard()[0][2].getValue() === "O" || board.getBoard()[0][2].getValue() === "X"
+    //    ) && (
+    //     board.getBoard()[1][0].getValue() === "O" || board.getBoard()[1][0].getValue() === "X"
+    //    )  && (
+    //     board.getBoard()[1][1].getValue() === "O" || board.getBoard()[1][1].getValue() === "X"
+    //    ) && (
+    //     board.getBoard()[1][2].getValue() === "O" || board.getBoard()[1][2].getValue() === "X"
+    //    ) && (
+    //     board.getBoard()[2][0].getValue() === "O" || board.getBoard()[2][0].getValue() === "X"
+    //    )  && (
+    //     board.getBoard()[2][1].getValue() === "O" || board.getBoard()[2][1].getValue() === "X"
+    //    ) && (
+    //     board.getBoard()[2][2].getValue() === "O" || board.getBoard()[2][2].getValue() === "X"
+    //    )) {
+    //     console.log("It's a tie!")
+    //     return true;
+    //    }
        
+    // }
+
+
+    // Check win conditions for rows
+    const checkRowWin = () => {
+        function isRowEqual(row) {
+            const firstCell = row[0].getValue();
+            return row.every(cell => cell.getValue() === firstCell && firstCell !== "");
+        }
+        return board.getBoard().some(row => isRowEqual(row));
     }
 
+    // Check win conditions for columns
+    const checkColWin = () => {
+        function isColumnEqual(col, index) {
+            const firstCell = col[0][index].getValue();
+            return col.every(row => row[index].getValue() === firstCell && firstCell !== "");
+        }
+        for (let i = 0; i < 3; i++) {
+            if (isColumnEqual(board.getBoard(), i)) return true;
+        }
+        return false;
+    }
+
+    // Check win conditions for diagonal
+
+    const checkDiagWin = () => {
+        const firstCell = board.getBoard()[0][0].getValue();
+        const lastCell = board.getBoard()[0][2].getValue();
+        let colIndex = 0;
+        let counter = 0;
+
+        for (let i = 0; i < 3; i++) {
+            if (board.getBoard()[i][colIndex].getValue() === firstCell && firstCell !== "") {
+                counter++;
+            }
+            colIndex++;
+        }
+        return counter === 3;
+    }
+
+    // Tie condition
+    const tieCondition = () => {
+        return board.getBoard().every((row) => row.every((cell) => cell.getValue() !== " "));
+    }
+
+    // Winning condition
+
     const winningCondition = () => {
-        if ((
-            board.getBoard()[0][0].getValue() === "O" &&
-            board.getBoard()[0][1].getValue() === "O" &&
-            board.getBoard()[0][2].getValue() === "O" 
-        ) || 
-        (
-            board.getBoard()[1][0].getValue() === "O" &&
-            board.getBoard()[1][1].getValue() === "O" &&
-            board.getBoard()[1][2].getValue() === "O"
-        ) || 
-        (
-            board.getBoard()[2][0].getValue() === "O" &&
-            board.getBoard()[2][1].getValue() === "O" &&
-            board.getBoard()[2][2].getValue() === "O"
-        ) || 
-        (
-            board.getBoard()[0][0].getValue() === "O" &&
-            board.getBoard()[1][0].getValue() === "O" &&
-            board.getBoard()[2][0].getValue() === "O"
-        ) || 
-        (
-            board.getBoard()[0][1].getValue() === "O" &&
-            board.getBoard()[1][1].getValue() === "O" &&
-            board.getBoard()[2][1].getValue() === "O"
-        ) ||
-        (
-            board.getBoard()[0][2].getValue() === "O" &&
-            board.getBoard()[1][2].getValue() === "O" &&
-            board.getBoard()[2][2].getValue() === "O"
-        ) ||
-        (
-            board.getBoard()[0][0].getValue() === "O" &&
-            board.getBoard()[1][1].getValue() === "O" &&
-            board.getBoard()[2][2].getValue() === "O"
-        ) ||
-        (
-            board.getBoard()[0][2].getValue() === "O" &&
-            board.getBoard()[1][1].getValue() === "O" &&
-            board.getBoard()[2][0].getValue() === "O"
-        )
-        ){
-            console.log('Player O wins!')
-            return true
-        } else if ((
-            board.getBoard()[0][0].getValue() === "X" &&
-            board.getBoard()[0][1].getValue() === "X" &&
-            board.getBoard()[0][2].getValue() === "X"  
-        ) || 
-        (
-            board.getBoard()[1][0].getValue() === "X" &&
-            board.getBoard()[1][1].getValue() === "X" &&
-            board.getBoard()[1][2].getValue() === "X" 
-        ) || 
-        (
-            board.getBoard()[2][0].getValue() === "X" &&
-            board.getBoard()[2][1].getValue() === "X" &&
-            board.getBoard()[2][2].getValue() === "X" 
-        ) || 
-        (
-            board.getBoard()[0][0].getValue() === "X" &&
-            board.getBoard()[1][0].getValue() === "X" &&
-            board.getBoard()[2][0].getValue() === "X" 
-        ) || 
-        (
-            board.getBoard()[0][1].getValue() === "X" &&
-            board.getBoard()[1][1].getValue() === "X" &&
-            board.getBoard()[2][1].getValue() === "X" 
-        ) || 
-        (
-            board.getBoard()[0][2].getValue() === "X" &&
-            board.getBoard()[1][2].getValue() === "X" &&
-            board.getBoard()[2][2].getValue() === "X" 
-        ) ||
-        (
-            board.getBoard()[0][0].getValue() === "X" &&
-            board.getBoard()[1][1].getValue() === "X" &&
-            board.getBoard()[2][2].getValue() === "X"
-        ) ||
-        (
-            board.getBoard()[0][2].getValue() === "X" &&
-            board.getBoard()[1][1].getValue() === "X" &&
-            board.getBoard()[2][0].getValue() === "X"
-        )
-        ) {
-            console.log('Player X wins!')
-            return true
+        if (checkColWin() || checkDiagWin() || checkRowWin()) {
+            return true;
         }
     }
+
+    // const winningCondition = () => {
+    //     if ((
+    //         board.getBoard()[0][0].getValue() === "O" &&
+    //         board.getBoard()[0][1].getValue() === "O" &&
+    //         board.getBoard()[0][2].getValue() === "O" 
+    //     ) || 
+    //     (
+    //         board.getBoard()[1][0].getValue() === "O" &&
+    //         board.getBoard()[1][1].getValue() === "O" &&
+    //         board.getBoard()[1][2].getValue() === "O"
+    //     ) || 
+    //     (
+    //         board.getBoard()[2][0].getValue() === "O" &&
+    //         board.getBoard()[2][1].getValue() === "O" &&
+    //         board.getBoard()[2][2].getValue() === "O"
+    //     ) || 
+    //     (
+    //         board.getBoard()[0][0].getValue() === "O" &&
+    //         board.getBoard()[1][0].getValue() === "O" &&
+    //         board.getBoard()[2][0].getValue() === "O"
+    //     ) || 
+    //     (
+    //         board.getBoard()[0][1].getValue() === "O" &&
+    //         board.getBoard()[1][1].getValue() === "O" &&
+    //         board.getBoard()[2][1].getValue() === "O"
+    //     ) ||
+    //     (
+    //         board.getBoard()[0][2].getValue() === "O" &&
+    //         board.getBoard()[1][2].getValue() === "O" &&
+    //         board.getBoard()[2][2].getValue() === "O"
+    //     ) ||
+    //     (
+    //         board.getBoard()[0][0].getValue() === "O" &&
+    //         board.getBoard()[1][1].getValue() === "O" &&
+    //         board.getBoard()[2][2].getValue() === "O"
+    //     ) ||
+    //     (
+    //         board.getBoard()[0][2].getValue() === "O" &&
+    //         board.getBoard()[1][1].getValue() === "O" &&
+    //         board.getBoard()[2][0].getValue() === "O"
+    //     )
+    //     ){
+    //         console.log('Player O wins!')
+    //         return true
+    //     } else if ((
+    //         board.getBoard()[0][0].getValue() === "X" &&
+    //         board.getBoard()[0][1].getValue() === "X" &&
+    //         board.getBoard()[0][2].getValue() === "X"  
+    //     ) || 
+    //     (
+    //         board.getBoard()[1][0].getValue() === "X" &&
+    //         board.getBoard()[1][1].getValue() === "X" &&
+    //         board.getBoard()[1][2].getValue() === "X" 
+    //     ) || 
+    //     (
+    //         board.getBoard()[2][0].getValue() === "X" &&
+    //         board.getBoard()[2][1].getValue() === "X" &&
+    //         board.getBoard()[2][2].getValue() === "X" 
+    //     ) || 
+    //     (
+    //         board.getBoard()[0][0].getValue() === "X" &&
+    //         board.getBoard()[1][0].getValue() === "X" &&
+    //         board.getBoard()[2][0].getValue() === "X" 
+    //     ) || 
+    //     (
+    //         board.getBoard()[0][1].getValue() === "X" &&
+    //         board.getBoard()[1][1].getValue() === "X" &&
+    //         board.getBoard()[2][1].getValue() === "X" 
+    //     ) || 
+    //     (
+    //         board.getBoard()[0][2].getValue() === "X" &&
+    //         board.getBoard()[1][2].getValue() === "X" &&
+    //         board.getBoard()[2][2].getValue() === "X" 
+    //     ) ||
+    //     (
+    //         board.getBoard()[0][0].getValue() === "X" &&
+    //         board.getBoard()[1][1].getValue() === "X" &&
+    //         board.getBoard()[2][2].getValue() === "X"
+    //     ) ||
+    //     (
+    //         board.getBoard()[0][2].getValue() === "X" &&
+    //         board.getBoard()[1][1].getValue() === "X" &&
+    //         board.getBoard()[2][0].getValue() === "X"
+    //     )
+    //     ) {
+    //         console.log('Player X wins!')
+    //         return true
+    //     }
+    // }
 
     const playRound = (row, column) => {
         // Drop a piece for the current player at a tile
